@@ -1,4 +1,4 @@
-import { ConfirmOptions, SelectOptions, TextOptions, text } from '@clack/prompts';
+import { ConfirmOptions, SelectOptions, TextOptions, text,MultiSelectOptions } from '@clack/prompts';
 import { confirm } from '@clack/prompts';
 import { select } from '@clack/prompts';
 import { multiselect } from '@clack/prompts';
@@ -15,6 +15,7 @@ export function selectPrompt(opts: SelectOptions<{ value:string; label: string; 
     return select(opts) as Promise<string>
 }
 
-export function multiselectPrompt(opts: SelectOptions<{ value:string; label: string; hint?: string | undefined; }[], string>) {
-    return multiselect(opts) as Promise<string[]>
+// 
+export function multiselectPrompt<T>(opts: MultiSelectOptions<{ value:T; label: string; hint?: string | undefined; }[], any>) {
+    return multiselect(opts) as any as Promise<string>
 }

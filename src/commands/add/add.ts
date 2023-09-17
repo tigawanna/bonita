@@ -39,15 +39,14 @@ export const addCommand = program
 
 
   export async function listAddablePackages(config: TBonitaConfigSchema,add_options?:TAddOptions) {
-  const result = await multiselectPrompt({
+  const result = await multiselectPrompt<TAddArgs[number]>({
     /* REQUIRED OPTIONS */
     message: "Which packages would you like to add?", // The message that the user will read
     options: [
       { label: "TailwindCSS", value: "tailwind" },
       { label: "PandaCSS", value: "panda" },
       { label: "Tanstack", value: "tanstack" },
-    ],
-      maxItems:10
+    ]
   });
 
   const packages = result && result;

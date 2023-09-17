@@ -13,6 +13,5 @@ export const pageCommand = program
   .action(async (args) => {
     const config = await getBonitaConfig();
     const parsed_args = await page_command_args(args);
-
     await addNewPage(parsed_args, config);
   });

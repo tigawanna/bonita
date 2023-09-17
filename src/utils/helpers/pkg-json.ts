@@ -5,7 +5,7 @@ import { DeepPartial } from "@/types";
 
 
 
-export async function getPkgJson(path: string = "./package.json"): Promise<IPackageJson> {
+export async function getPkgJson(path: string = "./package.json"): Promise<IPackageJson|undefined> {
   try {
     const pkg_json = await readFile(path, "utf-8");
     if (!pkg_json) {
@@ -14,7 +14,7 @@ export async function getPkgJson(path: string = "./package.json"): Promise<IPack
     const package_json = safeJSONParse<IPackageJson>(pkg_json);
     return package_json;
   } catch (error:any) {
-    throw new Error("getPkgJson error"+ error.message);
+    return
   }
 }
 export async function getDepsJson(){
@@ -122,13 +122,16 @@ export async function addDepsToPackageJsons(deps: string[],dev_dep: boolean,pkg_
       acc[dep] = "latest";
       return acc;
     }, {});
-    const pkg_json = await getPkgJson(pkg_json_path);
+  const pkg_json = await getPkgJson(pkg_json_path);
+  if(!pkg_json){
+    return
+  }
 if(dev_dep){
   pkg_json.devDependencies = {...pkgs_as_json,...pkg_json.devDependencies};
 }else{
   pkg_json.dependencies ={...pkgs_as_json,...pkg_json.dependencies};
 }
-console.log("new package json ==",pkg_json);
+// console.log("new package json ==",pkg_json);
   // await writeFile(pkg_json_path, JSON.stringify(pkg_json, null, 2), "utf8");
   } catch (error) {
 
