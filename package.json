@@ -1,0 +1,71 @@
+{
+  "name": "bonita",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Ultimate cli tool for frontend projects",
+  "author": {
+    "name": "tigawanna"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tigawanna/bonita"
+  },
+  "engines": {
+    "node": ">=17.x",
+    "npm": ">=8.x <9"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "bonita": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "node ./dist/index.cjs",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "pretty": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "release": "release-it",
+    "updeps": "tsx src\\utils\\helpers\\pkg-manager\\updateDeps.ts"
+  },
+  "keywords": [
+    "bonita",
+    "cli",
+    "typescript",
+    "web dev"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.1",
+    "@types/node": "^20.6.2",
+    "@types/spinnies": "^0.5.0",
+    "glob": "^10.3.4",
+    "prettier": "^3.0.3",
+    "release-it": "^16.1.5",
+    "tailwindcss": "^3.3.3",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.10",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4"
+  },
+  "dependencies": {
+    "@antfu/ni": "^0.21.8",
+    "@clack/prompts": "^0.7.0",
+    "adm-zip": "^0.5.10",
+    "commander": "^11.0.0",
+    "destr": "^2.0.1",
+    "execa": "^8.0.1",
+    "fast-glob": "^3.3.1",
+    "jsonrepair": "^3.2.0",
+    "kleur": "^4.1.5",
+    "magicast": "^0.3.0",
+    "path": "^0.12.7",
+    "radash": "^11.0.0",
+    "remeda": "^1.26.0",
+    "spinnies": "^0.5.1",
+    "zod": "^3.22.2"
+  }
+}
