@@ -28,7 +28,7 @@ export async function promptForTanstackConfig(config: TBonitaConfigSchema) {
         })),
       routes_path:
         (await textPrompt({
-          message: "Where do you want to put your routes",
+          message: "Where do you want to put your tanstack routes",
           initialValue: "./src/pages/routes/routes.ts",
         })),
     };
@@ -39,6 +39,6 @@ export async function promptForTanstackConfig(config: TBonitaConfigSchema) {
     saveConfig(new_config);
     return new_config;
   } catch (error: any) {
-    throw new Error("error prompting for panda config " + error.message);
+    throw new Error("error prompting for tanstack router config " + error.message);
   }
 }

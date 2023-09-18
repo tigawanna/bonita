@@ -15,15 +15,15 @@ import { confirmPrompt } from "@/utils/helpers/clack/prompts";
 
 
 export async function addNewtanstackPage(
-  pages: string[],
+  page: string[],
   bonita_config: TBonitaConfigSchema,
 ) {
   try {
-    if (!pages[0]) {
+    if (!page[0]) {
       throw new Error("Page name is missing!");
     }
     const config = await promptForTanstackConfig(bonita_config);
-    const dir_name = pages[0].toLowerCase();
+    const dir_name = page[0].toLowerCase();
     printHelpers.info("dir name ", dir_name);
 
     const dir_path = config.vite_tanstack.pages_dir_path + `/${dir_name}`;
