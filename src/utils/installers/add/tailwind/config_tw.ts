@@ -7,11 +7,11 @@ import { getPkgJson } from "@/utils/helpers/pkg-json";
 import { merge } from "remeda";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
 import { TBonitaConfigSchema } from "@/utils/config/config";
-import { promptForTWConfig } from "../../config/prompts/tailwind";
+import { promptForTWConfig } from "../../../config/prompts/tailwind";
 import { checkFramework } from "@/utils/helpers/framework/whatFramework";
 import depsjson from "#/deps.json"
 import { loadingSpinner } from "@/utils/helpers/clack/spinner";
-import { filterObjectWithArray } from "../../helpers/objects/filter";
+import { filterObjectWithArray } from "../../../helpers/objects/filter";
 
 
 

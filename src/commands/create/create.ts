@@ -1,8 +1,9 @@
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
 import { Command } from "commander";
-import { TCreateArgs, TCreateOptions, create_command_args, create_command_options } from "./create-commnad-args";
-import { installT3Rakkas } from "#/src/utils/installers/t3/installT3Rakkas";
+import { TCreateArgs, TCreateOptions, create_command_args } from "./create-commnad-args";
+
 import { printHelpers } from "#/src/utils/helpers/print-tools";
+import { installT3Rakkas } from "#/src/utils/installers/create/t3/installT3Rakkas";
 
 
 
@@ -22,8 +23,7 @@ export const createCommand = program
     }
 
     const creatables = await create_command_args(args);
-    const parsed_options = await create_command_options(options);
-
+    // const parsed_options = await create_command_options(options);
     if(creatables.includes("rakkas-t3-app")){
       await installT3Rakkas();
     }

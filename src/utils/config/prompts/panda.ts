@@ -1,5 +1,5 @@
 import { TBonitaConfigSchema, saveConfig } from "@/utils/config/config";
-import { TPandaConfigSchema } from "@/utils/installers/panda/panda";
+import { TPandaConfigSchema } from "#/src/utils/installers/add/panda/panda";
 import { textPrompt } from "@/utils/helpers/clack/prompts";
 
 export async function promptForPandaConfig(config: TBonitaConfigSchema) {

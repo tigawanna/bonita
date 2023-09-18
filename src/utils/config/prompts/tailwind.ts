@@ -1,5 +1,5 @@
 import { TBonitaConfigSchema, saveConfig } from "@/utils/config/config";
-import { TTailwindConfigSchema } from "@/utils/installers/tailwind/tailwind";
+import { TTailwindConfigSchema } from "#/src/utils/installers/add/tailwind/tailwind";
 import { existsSync } from "fs";
 import { textPrompt,multiselectPrompt } from "@/utils/helpers/clack/prompts";
 

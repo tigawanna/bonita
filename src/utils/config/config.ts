@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "fs";
 import { z } from "zod";
-import { tailwindSchema } from "../installers/tailwind/tailwind";
-import { pandaSchema } from "../installers/panda/panda";
+import { tailwindSchema } from "../installers/add/tailwind/tailwind";
+import { pandaSchema } from "../installers/add/panda/panda";
 import { supportedFrameworks } from "../helpers/framework/whatFramework";
 import { writeFile } from "fs/promises";
 import { printHelpers } from "../helpers/print-tools";

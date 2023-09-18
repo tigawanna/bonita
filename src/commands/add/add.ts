@@ -1,7 +1,7 @@
 import { TBonitaConfigSchema, getBonitaConfig } from "@/utils/config/config";
 import { Command } from "commander";
-import { installTailwind } from "@/utils/installers/tailwind/tailwind";
-import { installPanda } from "@/utils/installers/panda/panda";
+import { installTailwind } from "#/src/utils/installers/add/tailwind/tailwind";
+import { installPanda } from "#/src/utils/installers/add/panda/panda";
 import { TAddArgs, TAddOptions, add_command_args, add_command_options } from "./add-commnad-args";
 import { installTanstack } from "@/utils/installers/tanstack/tanstack";
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";

@@ -1,7 +1,7 @@
 import { TBonitaConfigSchema } from "@/utils/config/config";
-import {  addTailwindDeps, addTailwindPostcssConfig } from "@/utils/installers/tailwind/config_tw";
+import {  addTailwindDeps, addTailwindPostcssConfig } from "#/src/utils/installers/add/tailwind/config_tw";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
-import { promptForTWConfig } from "../../config/prompts/tailwind";
+import { promptForTWConfig } from "../../../config/prompts/tailwind";
 import { z } from "zod";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { addBaseTWcss } from "./add-base-css";

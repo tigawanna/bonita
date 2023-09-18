@@ -7,7 +7,7 @@ import { printHelpers } from "@/utils/helpers/print-tools";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
 import { TBonitaConfigSchema } from "@/utils/config/config";
 import { promptForPandaConfig } from "@/utils/config/prompts/panda";
-import { loadingSpinner } from "../../helpers/clack/spinner";
+import { loadingSpinner } from "../../../helpers/clack/spinner";
 
 
 

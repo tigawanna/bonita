@@ -1,6 +1,6 @@
 import { TBonitaConfigSchema } from "@/utils/config/config";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
-import { promptForPandaConfig } from "../../config/prompts/panda";
+import { promptForPandaConfig } from "../../../config/prompts/panda";
 import { z } from "zod";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { addBasePandacss, addPandaDeps, pandaInit } from "./config_panda";
