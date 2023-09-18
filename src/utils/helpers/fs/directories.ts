@@ -2,7 +2,7 @@ import { cp, readdir, rm } from "fs/promises";
 import AdmZip from "adm-zip";
 import { existsSync } from "fs";
 import { printHelpers } from "../print-tools";
-import { loadingSpinner } from "../clack/spinner";
+
 
 
 export async function readDirectories(directoryPath: string) {
@@ -29,25 +29,25 @@ export function unzipFile(zipFilePath: string, outputPath: string) {
 }
 
 export async function removeDirectory(directoryPath: string) {
-  const delete_dir_spinner = loadingSpinner();
-  delete_dir_spinner.add("main", { text: "removing directory" });
+  // const delete_dir_spinner = loadingSpinner();
+  // delete_dir_spinner.add("main", { text: "removing directory" });
   const maxAttempts = 10;
   const delayTime = 1000;
   try {
     await rm(directoryPath, { recursive: true });
     // printHelpers.success(directoryPath + " removed successfully");
-    delete_dir_spinner.succeed("main", {
-      text: directoryPath + " removed successfully",
-    });
+    // delete_dir_spinner.succeed("main", {
+    //   text: directoryPath + " removed successfully",
+    // });
   } catch (error: any) {
     // printHelpers.error(`Error removing ${directoryPath} directory:`, error);
     if (error.code === "EBUSY") {
       await delay(delayTime);
       await removeDirectory(directoryPath);
     } else {
-      delete_dir_spinner.fail("main", {
-        text: error.message + `try deleting ${directoryPath} manually`,
-      });
+      // delete_dir_spinner.fail("main", {
+      //   text: error.message + `try deleting ${directoryPath} manually`,
+      // });
       throw error;
     }
   
@@ -62,10 +62,11 @@ export async function mergeOrCreateDirs(
   originPath: string,
   destinationPath: string,
 ) {
-  const merge_dir_spinner = loadingSpinner();
-  merge_dir_spinner.add("main", {
-    text: "merging files",
-  });
+
+  // const merge_dir_spinner = loadingSpinner();
+  // merge_dir_spinner.add("main", {
+  //   text: "merging files",
+  // });
 
   try {
     const origin_pages_dirs = await readDirectories(originPath);
@@ -92,9 +93,9 @@ export async function mergeOrCreateDirs(
           }
         }),
       );
-      merge_dir_spinner.succeed("main", {
-        text: destinationPath + "directory merged successfully",
-      });
+      // merge_dir_spinner.succeed("main", {
+      //   text: destinationPath + "directory merged successfully",
+      // });
       return {
         success: true,
         operation: "merge",
@@ -113,9 +114,9 @@ export async function mergeOrCreateDirs(
         recursive: true,
       });
       // printHelpers.success(destinationPath + "directory created successfully");
-      merge_dir_spinner.succeed("main", {
-        text: destinationPath + "directory created successfully",
-      });
+      // merge_dir_spinner.succeed("main", {
+      //   text: destinationPath + "directory created successfully",
+      // });
 
       return {
         success: true,
@@ -128,7 +129,7 @@ export async function mergeOrCreateDirs(
       };
     }
   } catch (error: any) {
-    merge_dir_spinner.fail("main", { text: error.message });
+    // merge_dir_spinner.fail("main", { text: error.message });
     throw error;
   }
 }
