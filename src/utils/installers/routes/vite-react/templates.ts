@@ -3,7 +3,7 @@ import { pascal } from "radash";
 import fs from "fs";
 import { TBonitaConfigSchema } from "@/utils/config/config";
 import { promptForTanstackConfig } from "@/utils/config/prompts/vite-tanstack";
-import { loadingSpinner } from "../../helpers/clack/spinner";
+import { loadingSpinner } from "@/utils/helpers/clack/spinner";
 
 export async function tanstackRouteLayoutTempalte(
   dir_name: string,
@@ -36,7 +36,8 @@ export function ${dirName}Layout({}: ${dirName}LayoutProps) {
     };
   } catch (error: any) {
     spinnies.fail("config", { text: error.message });
-    throw error;
+    // throw error;
+    return
   }
 }
 export async function tanstackRoutePageTempalte(
@@ -68,7 +69,8 @@ export function ${dirName}({}: ${dirName}Props) {
     };
   } catch (error: any) {
     spinnies.fail("config", { text: error.message });
-    throw error;
+    // throw error;
+    return
   }
 }
 
@@ -112,7 +114,8 @@ export const ${dir_name.toLowerCase()}Route = ${dirName}RouteLayout.addChildren(
     };
   } catch (error: any) {
     spinnies.fail("config", { text: error.message });
-    throw error;
+    // throw error;
+    return
   }
 }
 
@@ -169,6 +172,7 @@ export async function updatetanstackConfig(
     });
   } catch (error: any) {
     spinnies.fail("updating", { text: error.message });
-    throw error;
+    // throw error;
+    return
   }
 }

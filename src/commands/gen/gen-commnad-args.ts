@@ -2,7 +2,7 @@ import { printHelpers } from "@/utils/helpers/print-tools";
 import { z } from "zod";
 
 
-export const genSubCommandEnum = ["page", "model"] as const
+export const genSubCommandEnum = ["page", "route" ,"model",] as const
 
 export const genArgsShema = z.array(z.union([z.enum(genSubCommandEnum), z.string()]))
   .refine((value) => value.length > 0 && z.enum(genSubCommandEnum).safeParse(value[0]).success, {

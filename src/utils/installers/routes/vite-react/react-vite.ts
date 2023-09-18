@@ -3,7 +3,6 @@ import kleur from "kleur";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { TBonitaConfigSchema } from "@/utils/config/config";
 import { promptForTanstackConfig } from "@/utils/config/prompts/vite-tanstack";
-
 import { removeDirectory } from "@/utils/helpers/fs/directories";
 import {
   tanstackRouteConfigTempalte,
@@ -15,11 +14,11 @@ import { confirmPrompt } from "@/utils/helpers/clack/prompts";
 
 
 export async function addNewtanstackPage(
-  page: string[],
+  page: string,
   bonita_config: TBonitaConfigSchema,
 ) {
   try {
-    if (!page[0]) {
+    if (!page) {
       throw new Error("Page name is missing!");
     }
     const config = await promptForTanstackConfig(bonita_config);
@@ -52,6 +51,6 @@ export async function addNewtanstackPage(
     await updatetanstackConfig(bonita_config, dir_name);
   } catch (error: any) {
     printHelpers.error("error creating page " + error.message);
-    throw error;
+    return
   }
 }

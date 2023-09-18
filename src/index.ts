@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { pageCommand } from "@/commands/page/page.ts";
 import { addCommand } from "./commands/add/add";
 import { getPkgJson } from "@/utils/helpers/pkg-json";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { testCommand } from "./commands/test/test";
 import { createCommand } from "./commands/create/create";
+import { genCommand } from "./commands/gen/gen";
 
 const program = new Command();
 
@@ -22,7 +22,7 @@ if(pkg_json.workspaces){
   }
 })
 program.addCommand(addCommand);
-program.addCommand(pageCommand);
+program.addCommand(genCommand);
 program.addCommand(createCommand);
 program.addCommand(testCommand);
 
