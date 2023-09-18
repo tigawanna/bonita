@@ -14,6 +14,10 @@ yarn add -D bonita
 pnpm i -D bonita
 ```
 
+## commands 
+
+### bonita add
+
 - Adding tailwind 
 ```sh
 npx bonita add tailwind
@@ -39,18 +43,33 @@ bonita add tanstack
 ```
 In Nextjs or rakkas will only add tanstack query ,and will add query + router in vite SPA
 
-You can also add new pages to your project using
+### bonita gen
+ sub commands 
+ - route : generate a route , which will create boilerplate for
+   - The route directory
+   - a layout file
+   - a route file
+   - a dynamic route file
+
 ```sh
-bonita page [PageName]
+bonita gen route Route1 Route2
 ```
+
 example
 ```sh
-pnpm bonita page about
+pnpm bonita gen route user about
 ```
-adds the files 
-- about/AboutLayout.tsx
-- about/AboutPage.tsx
- > *In tanstack router it also adds the config file 
- and imports it into the main router definition*
+to generate the user and about routes
 
-Redwood and rakkas support is still a work in progress.
+
+
+-  model: 🚧
+
+
+
+### bonita create 🚧
+
+Currentlt only supports rakkasjs 
+- Rakkasjs will pull in a [trpc + prisma + tailwind + typescript template](https://github.com/tigawanna/trpc-rakkas.git) for now , fine grained choice might be added later
+
+
