@@ -4,7 +4,7 @@
   },
   "git": {
     "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
-    "requireCleanWorkingDir": true,
+    "requireCleanWorkingDir": false,
     "requireBranch":"main",
     "requireUpstream": true,
     "requireCommits": false,
