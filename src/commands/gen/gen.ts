@@ -1,17 +1,19 @@
-import { TBonitaConfigSchema, getBonitaConfig } from "@/utils/config/config";
 import { Command } from "commander";
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
 import { gen_command_args, gen_command_options, genSubCommandEnum } from "./gen-commnad-args";
 import { addNewRoute } from "#/src/utils/installers/gen/routes/addNewRoute";
+import { bonitaRootCommand, getBonitaConfig, TBonitaConfigSchema } from "#/src/utils/config/bonita";
 
 
-const program = new Command();
 
-export const genCommand = program
-  .command("gen")
-  .description("generate boilerplate for your project")
+
+export const genCommand =  bonitaRootCommand({
+  name: "gen",
+  description: "generate boilerplate for your project"
+})
+
   .argument("[inputs...]", "string to split")
-  .option('-y, --yes', 'Accept all defaults', false)
+
   .action(async (args,options) => {
     const config = await getBonitaConfig();
     

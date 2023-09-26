@@ -4,7 +4,7 @@ import { printHelpers } from "@/utils/helpers/print-tools";
 import { addBasePandacss, addPandaDeps, pandaInit } from "./config_panda";
 import { promptForPandaConfig } from "#/src/utils/config/prompts/panda";
 import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
-import { TAddOptions } from "../../add-commnad-args";
+import { TBonitaOptions } from "../../../../commands/add/add-commnad-args";
 
 
 // Define the tailwind schema
@@ -16,7 +16,7 @@ export type TPandaConfigSchema = z.infer<typeof pandaSchema>;
 
 export interface IInstallPanda {
   bonita_config: TBonitaConfigSchema;
-  options?: TAddOptions
+  options?: TBonitaOptions
 }
 
 export async function installPanda({bonita_config,options}:IInstallPanda) {

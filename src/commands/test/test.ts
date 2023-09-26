@@ -1,6 +1,4 @@
-import { loadingSpinner } from "#/src/utils/helpers/clack/spinner";
 import { mergeDependancies } from "#/src/utils/helpers/pkg-manager/mergeDependancies";
-import { group } from "@clack/prompts";
 import { Command } from "commander";
 
 const program = new Command();

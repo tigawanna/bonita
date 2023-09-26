@@ -1,7 +1,7 @@
 import { existsSync } from "fs";
 import { textPrompt } from "@/utils/helpers/clack/prompts";
 import { z } from "zod";
-import { TAddOptions } from "@/commands/add/add-commnad-args";
+import { TBonitaOptions } from "@/utils/config/bonita";
 import { TBonitaConfigSchema } from "@/utils/config/bonita";
 import { saveConfig } from "@/utils/config/helpers";
 
@@ -15,7 +15,7 @@ export const tailwindSchema = z.object({
 
 export type TTailwindConfigSchema = z.infer<typeof tailwindSchema>;
 
-export async function promptForTWConfig(config: TBonitaConfigSchema,options?:TAddOptions) {
+export async function promptForTWConfig(config: TBonitaConfigSchema,options?:TBonitaOptions) {
   try {
     if (config && config.tailwind && "tw_config" in config.tailwind) {
       return {

@@ -1,27 +1,22 @@
 
 import { Command } from "commander";
-import { installPanda } from "#/src/commands/add/installers/panda/panda";
-import { TAddArgs, TAddOptions, add_command_args, add_command_options } from "./add-commnad-args";
+import { installPanda } from "#/src/utils/installers/add/panda/panda";
+import { TAddArgs,add_command_args } from "./add-commnad-args";
 
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
-import { TBonitaConfigSchema, getBonitaConfig } from "#/src/utils/config/bonita";
+import { TBonitaConfigSchema, TBonitaOptions, add_command_options,bonitaRootCommand,getBonitaConfig } from "#/src/utils/config/bonita";
 import { promptToInstall } from "#/src/utils/config/helpers";
-import { installTailwind } from "@/commands/add/installers/tailwind/tailwind";
+import { installTailwind } from "#/src/utils/installers/add/tailwind/tailwind";
+
 
 
 const program = new Command();
 
-export const addCommand = program
-  .command("add")
-  .description("add packages to your project")
-  .argument("[inputs...]", "string to split")
-  .option("-d, --root-dir <root_dir>", "Root directory")
-  .option("-s, --root-styles <root_styles>", "Root styles file")
-  .option("-f, --root-file <root_file>", "Root file",)
-  .option("-tw, --tw-config <tw_config>", "tailwind config path",)
-  .option("-panda, --panda-config <panda_config>", "panda config path",)
-  .option("-p, --plugins <plugins...>", "Plugins")
-  .option('-y, --yes', 'Accept all defaults', false)
+export const addCommand = bonitaRootCommand({
+  name: "add",
+  description: "add packages to your project"
+})
+  .argument("[inputs...]", " packages to add to the project")
   .action(async (args,options) => {
     const config = await getBonitaConfig(options);
     
@@ -45,7 +40,7 @@ export const addCommand = program
   });
 
 
-  export async function listAddablePackages(config: TBonitaConfigSchema,add_options?:TAddOptions) {
+  export async function listAddablePackages(config: TBonitaConfigSchema,add_options?:TBonitaOptions) {
   const result = await multiselectPrompt<TAddArgs[number]>({
     /* REQUIRED OPTIONS */
     message: "Which packages would you like to add?", // The message that the user will read

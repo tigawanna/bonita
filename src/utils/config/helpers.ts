@@ -2,7 +2,7 @@ import { writeFile } from "fs/promises";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { loadingSpinner } from "@/utils//helpers/clack/spinner";
 import { TBonitaConfigSchema } from "@/utils/config/bonita";
-import { TAddOptions } from "#/src/commands/add/add-commnad-args";
+import { TBonitaOptions } from "#/src/commands/add/add-commnad-args";
 import { outro } from "@clack/prompts";
 import { confirmPrompt } from "@/utils/helpers/clack/prompts";
 import { installPackages } from "@/utils/helpers/pkg-manager/package-managers";
@@ -28,7 +28,7 @@ export async function saveConfig(config: TBonitaConfigSchema) {
 }
 
 
-export async function promptToInstall(options?: TAddOptions) {
+export async function promptToInstall(options?: TBonitaOptions) {
 
   try {
     if (!options?.yes) {

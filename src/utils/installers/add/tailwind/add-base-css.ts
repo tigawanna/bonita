@@ -1,7 +1,7 @@
 import { existsSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { printHelpers } from "@/utils/helpers/print-tools";
-import { tailwind_base_css } from "@/commands/add/installers/tailwind/templates";
+import { tailwind_base_css } from "#/src/utils/installers/add/tailwind/templates";
 import { loadingSpinner } from "@/utils/helpers/clack/spinner";
 
 export async function addBaseTWcss(inde_styles_path: string) {

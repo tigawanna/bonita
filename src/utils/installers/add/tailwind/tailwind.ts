@@ -1,9 +1,9 @@
 import { validateRelativePath } from "@/utils/helpers/strings/general";
 import { z } from "zod";
 import { printHelpers } from "@/utils/helpers/print-tools";
-import { addTailwindDeps, addTailwindPostcssConfig } from "@/commands/add/installers/tailwind/config_tw";
-import { addBaseTWcss } from "@/commands/add/installers/tailwind/add-base-css";
-import { TAddOptions } from "@/commands/add/add-commnad-args";
+import { addTailwindDeps, addTailwindPostcssConfig } from "#/src/utils/installers/add/tailwind/config_tw";
+import { addBaseTWcss } from "#/src/utils/installers/add/tailwind/add-base-css";
+import { TBonitaOptions } from "@/utils/config/bonita";
 import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
 import { promptForTWConfig } from "#/src/utils/config/prompts/tailwind";
 
@@ -18,7 +18,7 @@ export type TTailwindConfigSchema = z.infer<typeof tailwindSchema>;
 
 export interface IInstallTailwin{
   bonita_config: TBonitaConfigSchema;
-  options?: TAddOptions
+  options?: TBonitaOptions
 }
 
 export async function installTailwind({bonita_config,options}:IInstallTailwin) {

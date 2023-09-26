@@ -1,5 +1,10 @@
 import kleur from "kleur";
+import { spinner } from '@clack/prompts';
 
+
+const checkmark = kleur.green("✔︎");
+const xmark = kleur.red("ⅹ");
+const warn = kleur.yellow("⚠︎");
 /**
  * Print a blank line.
  */
@@ -18,27 +23,65 @@ function divider() {
   );
 }
 
-export function error(message: any, content?: any) {
-  console.log(kleur.red(message));
-  content && console.log(content);
-  divider();
-}
 
-export function success(message: any, content?: any) {
-  console.log(kleur.green(message));
-  content && console.log(content);
-}
-
-export function warning(message: any, content?: any) {
-  console.log(kleur.yellow(message));
-  content && console.log(content);
-}
-
-export function info(message: any, content?: any) {
-  if (content) {
-    console.log(kleur.cyan(message), content);
+export function error(message: any, content?: any, legacy = false) {
+  if (legacy) {
+    console.log(kleur.red(message + " " + xmark));
+    content && console.log(content);
   } else {
-    console.log(kleur.cyan(message));
+    const s = spinner();
+    s.start(kleur.yellow(message));
+    if (content) {
+      s.stop(kleur.red(message + " " + xmark + "\n" + JSON.stringify(content, null, 2)), 1);
+    } else {
+      s.stop(kleur.red(message + " " + xmark), 1);
+    }
+  }
+}
+
+
+export function success(message: any, content?: any, legacy = false) {
+  if (legacy) {
+    console.log(kleur.green(message + " " + checkmark));
+    content && console.log(content);
+  } else {
+    const s = spinner();
+    s.start(kleur.yellow(message));
+    if (content) {
+      s.stop(kleur.cyan(message + +" " + checkmark + "\n" + JSON.stringify(content, null, 2)), 0);
+    } else {
+      s.stop(kleur.cyan(message + " " + checkmark), 0);
+    }
+  }
+}
+
+export function warning(message: any, content?: any, legacy = false) {
+  if (legacy) {
+    console.log(kleur.yellow(message));
+    content && console.log(content);
+  } else {
+    const s = spinner();
+    s.start(kleur.yellow(message));
+    if (content) {
+      s.stop(kleur.yellow(message + " " + warn + "\n" + JSON.stringify(content, null, 2)), 0);
+    } else {
+      s.stop(kleur.yellow(message + " " + warn), 0);
+    }
+  }
+}
+
+export function info(message: any, content?: any, legacy = false) {
+  if (legacy) {
+    console.log(kleur.yellow("---" + message + "--- "));
+    content && console.log(content);
+  } else {
+    const s = spinner();
+    s.start(kleur.yellow(message));
+    if (content) {
+      s.stop(kleur.yellow("---" + message + "--- " + "\n" + JSON.stringify(content, null, 2)), 0);
+    } else {
+      s.stop(kleur.yellow("--" + message + "--"), 0);
+    }
   }
 
   // content && console.log(content);
@@ -51,7 +94,7 @@ function fancy(message: any): void {
 function stringify(message: any) {
   console.log(JSON.stringify(message, null, 2));
 }
-function debug(title = "DEBUG", message:any): void {
+function debug(title = "DEBUG", message: any): void {
   const topLine = `vvv -----[ ${title} ]----- vvv`;
   const botLine = `^^^ -----[ ${title} ]----- ^^^`;
 
@@ -68,8 +111,7 @@ function muted(message: string): void {
   console.log(kleur.bgCyan(message));
 }
 
-const checkmark = kleur.green("✔︎");
-const xmark = kleur.red("ⅹ");
+
 
 const printHelpers = {
   newline,

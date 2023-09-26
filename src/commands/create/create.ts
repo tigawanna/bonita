@@ -1,22 +1,18 @@
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
-import { Command } from "commander";
 import { TCreateArgs, TCreateOptions, create_command_args } from "./create-commnad-args";
-import { printHelpers } from "#/src/utils/helpers/print-tools";
 import { installT3Rakkas } from "#/src/utils/installers/create/t3/installT3Rakkas";
+import { bonitaRootCommand } from "#/src/utils/config/bonita";
 
 
 
 
-const program = new Command();
+export const createCommand = bonitaRootCommand({
+  name: "create",
+  description: "create new projects"
+})
+.argument("[inputs...]", "arguments")
+.action(async (args,options) => {
 
-export const createCommand = program
-  .command("create")
-  .description("create new projects")
-  .argument("[inputs...]", "arguments")
-  .option('-y, --yes', 'Accept all defaults', false)
-  .action(async (args,options) => {
-  printHelpers.info("create command"),args;
-    
     if (args.length === 0) {
     return listCreatablePackages(options);
     }

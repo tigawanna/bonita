@@ -1,9 +1,9 @@
-import { TBonitaConfigSchema } from "@/utils/config/config";
 import { printHelpers } from "@/utils/helpers/print-tools";
-import { promptForTanstackConfig } from "@/utils/config/prompts/vite-tanstack";
 import { addNewtanstackPage } from "./vite-react/react-vite";
 import { addNewRakkasPage } from "./rakkas/add-page";
 import { textPrompt } from "@/utils/helpers/clack/prompts";
+import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
+import { promptForTanstackConfig } from "#/src/utils/config/prompts/vite-tanstack";
 
 export async function addNewRoute( pages: string[],bonita_config: TBonitaConfigSchema) {
   try {

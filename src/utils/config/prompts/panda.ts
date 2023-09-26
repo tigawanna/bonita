@@ -1,10 +1,10 @@
-import { TPandaConfigSchema } from "#/src/commands/add/installers/panda/panda";
+import { TPandaConfigSchema } from "#/src/utils/installers/add/panda/panda";
 import { textPrompt } from "@/utils/helpers/clack/prompts";
 import { TBonitaConfigSchema } from "@/utils/config/bonita"
 import { saveConfig } from "@/utils/config/helpers"
-import { TAddOptions } from "#/src/commands/add/add-commnad-args";
+import { TBonitaOptions } from "#/src/utils/config/bonita";
 
-export async function promptForPandaConfig(config: TBonitaConfigSchema,options?:TAddOptions) {
+export async function promptForPandaConfig(config: TBonitaConfigSchema,options?:TBonitaOptions) {
   try {
     if (config && config.panda && "panda_config_path" in config.panda) {
       return {

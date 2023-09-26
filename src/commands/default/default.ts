@@ -12,7 +12,7 @@ export const defaultCommand = program.command('404', { isDefault: true })
     // program.help();
     console.log("catch all command ", args)
     const spinner = loadingSpinner();
-    spinner.start("main", { text: "task success" });
+    spinner.add("main", { text: "task success" });
     setTimeout(() => {
       spinner.succeed("main", { text: "task success" });
     }, 3000);
