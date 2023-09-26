@@ -2,20 +2,19 @@ import { TBonitaConfigSchema, getBonitaConfig } from "@/utils/config/config";
 import { Command } from "commander";
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
 import { gen_command_args, gen_command_options, genSubCommandEnum } from "./gen-commnad-args";
-import { addNewRoute } from "#/src/utils/installers/routes/addNewRoute";
+import { addNewRoute } from "#/src/utils/installers/gen/routes/addNewRoute";
 
 
 const program = new Command();
 
 export const genCommand = program
   .command("gen")
-  .description("generate boilerplate for your pproject")
+  .description("generate boilerplate for your project")
   .argument("[inputs...]", "string to split")
   .option('-y, --yes', 'Accept all defaults', false)
   .action(async (args,options) => {
     const config = await getBonitaConfig();
     
-
     if (args.length === 0) {
       return listgenablePackages(config);
     }
@@ -26,6 +25,9 @@ export const genCommand = program
     // parsed_args.slice(1) =  [ 'user pilot about' ]
     const page_names = parsed_args.slice(1)[0]?.split(" ");
     //page_names = [ 'user', 'pilot', 'about' ]
+    if (!sub_command) {
+      return listgenablePackages(config);
+    }
 
     if(sub_command === "route"){
      await addNewRoute(page_names, config);
