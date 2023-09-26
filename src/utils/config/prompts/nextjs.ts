@@ -1,6 +1,13 @@
-import { TBonitaConfigSchema, saveConfig } from "@/utils/config/config";
-import { TNextjsReactConfigSchema } from "@/utils/installers/tanstack/nextjs/next";
+import { TBonitaConfigSchema } from "@/utils/config/bonita"
+import { saveConfig } from "@/utils/config/helpers"
 import { confirmPrompt } from "@/utils/helpers/clack/prompts";
+import { z } from "zod";
+
+export const nextjsReactSchema = z.object({
+  src_dir: z.boolean().default(true),
+});
+
+export type TNextjsReactConfigSchema = z.infer<typeof nextjsReactSchema>;
 
 export async function promptForNextjsConfig(config: TBonitaConfigSchema) {
   try {

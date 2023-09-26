@@ -5,9 +5,8 @@ import { getDepsJson, getPkgJson } from "@/utils/helpers/pkg-json";
 import { merge } from "remeda";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
-import { TBonitaConfigSchema } from "@/utils/config/config";
-import { promptForPandaConfig } from "@/utils/config/prompts/panda";
-import { loadingSpinner } from "../../../helpers/clack/spinner";
+import { loadingSpinner } from "@/utils/helpers/clack/spinner";
+import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
 
 
 
@@ -105,6 +104,9 @@ export async function addPandaDeps() {
   try {
     spinnies.add("main", { text: "adding panda deps" });
     const pkg_json = await getPkgJson();
+    if(!pkg_json){
+      throw new Error("package.json not found")
+    }
     const tw_deps_json = await (await getDepsJson()).panda
     const new_deps = merge(pkg_json.dependencies, tw_deps_json.main)
     const new_dev_deps = merge(pkg_json.devDependencies, tw_deps_json.dev)

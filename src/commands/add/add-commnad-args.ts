@@ -15,6 +15,12 @@ export async function add_command_args(args: any) {
 }
 
 const addOptionsShema = z.object({
+  rootDir: z.string().optional(),
+  rootStyles: z.string().optional(),
+  twConfig: z.string().default("tailwind.config.js").optional(),
+  pandaConfig: z.string().default("panda.config.ts").optional(),
+  rootFile: z.string().optional(),
+  plugins: z.array(z.string()).default([]).optional(),
   yes:z.boolean().default(false),
 });
 export type TAddOptions = z.infer<typeof addOptionsShema>;

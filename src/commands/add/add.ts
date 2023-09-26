@@ -1,11 +1,12 @@
-import { TBonitaConfigSchema, getBonitaConfig } from "@/utils/config/config";
+
 import { Command } from "commander";
-import { installTailwind } from "#/src/utils/installers/add/tailwind/tailwind";
-import { installPanda } from "#/src/utils/installers/add/panda/panda";
+import { installPanda } from "#/src/commands/add/installers/panda/panda";
 import { TAddArgs, TAddOptions, add_command_args, add_command_options } from "./add-commnad-args";
-import { installTanstack } from "@/utils/installers/tanstack/tanstack";
+
 import { multiselectPrompt } from "#/src/utils/helpers/clack/prompts";
-import { promptToInstall } from "#/src/utils/config/prompts/install";
+import { TBonitaConfigSchema, getBonitaConfig } from "#/src/utils/config/bonita";
+import { promptToInstall } from "#/src/utils/config/helpers";
+import { installTailwind } from "@/commands/add/installers/tailwind/tailwind";
 
 
 const program = new Command();
@@ -14,9 +15,15 @@ export const addCommand = program
   .command("add")
   .description("add packages to your project")
   .argument("[inputs...]", "string to split")
+  .option("-d, --root-dir <root_dir>", "Root directory")
+  .option("-s, --root-styles <root_styles>", "Root styles file")
+  .option("-f, --root-file <root_file>", "Root file",)
+  .option("-tw, --tw-config <tw_config>", "tailwind config path",)
+  .option("-panda, --panda-config <panda_config>", "panda config path",)
+  .option("-p, --plugins <plugins...>", "Plugins")
   .option('-y, --yes', 'Accept all defaults', false)
   .action(async (args,options) => {
-    const config = await getBonitaConfig();
+    const config = await getBonitaConfig(options);
     
 
     if (args.length === 0) {
@@ -26,14 +33,14 @@ export const addCommand = program
     const parsed_options = await add_command_options(options);
 
     if (packages.includes("tailwind")) {
-      await installTailwind(config);
+      await installTailwind({bonita_config:config,options});
     }
     if (packages.includes("panda")) {
-      await installPanda(config);
+      await installPanda({bonita_config:config,options});
     }
-    if (packages.includes("tanstack")) {
-      await installTanstack(config);
-    }
+    // if (packages.includes("tanstack")) {
+    //   await installTanstack(config);
+    // }
     await promptToInstall(parsed_options)
   });
 
@@ -52,14 +59,14 @@ export const addCommand = program
   const packages = result && result;
   if (packages) {
     if (packages.includes("tailwind")) {
-      await installTailwind(config);
+      await installTailwind({ bonita_config: config, options:add_options });
     }
     if (packages.includes("panda")) {
-      await installPanda(config);
+      await installPanda({ bonita_config: config, options:add_options });
     }
-    if (packages.includes("tanstack")) {
-      await installTanstack(config,add_options);
-    }
+    // if (packages.includes("tanstack")) {
+    //   await installTanstack(config,add_options);
+    // }
     await promptToInstall(add_options)
   }
 }

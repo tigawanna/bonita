@@ -1,11 +1,21 @@
-import { TBonitaConfigSchema, saveConfig } from "@/utils/config/config";
-import { TTailwindConfigSchema } from "#/src/utils/installers/add/tailwind/tailwind";
 import { existsSync } from "fs";
-import { textPrompt,multiselectPrompt } from "@/utils/helpers/clack/prompts";
+import { textPrompt } from "@/utils/helpers/clack/prompts";
+import { z } from "zod";
+import { TAddOptions } from "@/commands/add/add-commnad-args";
+import { TBonitaConfigSchema } from "@/utils/config/bonita";
+import { saveConfig } from "@/utils/config/helpers";
 
 
 
-export async function promptForTWConfig(config: TBonitaConfigSchema) {
+// Define the tailwind schema
+export const tailwindSchema = z.object({
+  tw_config: z.string().default("tailwind.config.js"),
+  tw_plugins: z.array(z.string()).default([]),
+});
+
+export type TTailwindConfigSchema = z.infer<typeof tailwindSchema>;
+
+export async function promptForTWConfig(config: TBonitaConfigSchema,options?:TAddOptions) {
   try {
     if (config && config.tailwind && "tw_config" in config.tailwind) {
       return {
@@ -17,22 +27,19 @@ export async function promptForTWConfig(config: TBonitaConfigSchema) {
       };
     }
     const answers: TTailwindConfigSchema = {
-      tw_config: await textPrompt({
+      tw_config:options?.twConfig??await textPrompt({
           message: "Where do you want to add your tailwind config file",
           initialValue: existsSync("tailwind.config.ts")?"tailwind.config.ts":"tailwind.config.js",
         }),
-
-      tw_plugins: (await multiselectPrompt({
+      tw_plugins:options?.plugins??await  textPrompt({
         message: "Want some plugins?",
-        options: [
-          { value: "daisyui", label: "daisyui" },
-          { value: "tailwindcss-animate", label: "tailwindcss-animate" },
-          { value: "tailwind-scrollbar", label: "tailwind-scrollbar" },
-          { value: "tailwindcss-elevation", label: "tailwindcss-elevation" },
-        ],
-      })) ?? [""],
+        initialValue: "daisyui,tailwindcss-animate",
+      }).then((value) => value.split(","))
+
     };
 
+ 
+    
     const new_config = {
       ...config,
       tailwind: answers,

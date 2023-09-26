@@ -9,7 +9,7 @@ export const supportedFrameworklist = supportedFrameworks.filter(
 );
 
 const frames: TSupprtedFrameworks = "Nextjs";
-export type FrameWorkDefaults={
+export type TFrameWorkDefaults = {
   root_dir: string;
   root_styles: string;
   root_file: string;
@@ -22,7 +22,7 @@ export type FrameWorkDefaults={
   };
 }
 
-export function frameworkDefaults(framework: TSupprtedFrameworks):FrameWorkDefaults {
+export function frameworkDefaults(framework: TSupprtedFrameworks): TFrameWorkDefaults {
   if (framework === "Nextjs") {
     return nextJSFileStructure();
   }

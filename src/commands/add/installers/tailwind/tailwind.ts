@@ -1,10 +1,11 @@
-import { TBonitaConfigSchema } from "@/utils/config/config";
-import {  addTailwindDeps, addTailwindPostcssConfig } from "#/src/utils/installers/add/tailwind/config_tw";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
-import { promptForTWConfig } from "../../../config/prompts/tailwind";
 import { z } from "zod";
 import { printHelpers } from "@/utils/helpers/print-tools";
-import { addBaseTWcss } from "./add-base-css";
+import { addTailwindDeps, addTailwindPostcssConfig } from "@/commands/add/installers/tailwind/config_tw";
+import { addBaseTWcss } from "@/commands/add/installers/tailwind/add-base-css";
+import { TAddOptions } from "@/commands/add/add-commnad-args";
+import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
+import { promptForTWConfig } from "#/src/utils/config/prompts/tailwind";
 
 
 // Define the tailwind schema
@@ -15,10 +16,14 @@ export const tailwindSchema = z.object({
 
 export type TTailwindConfigSchema = z.infer<typeof tailwindSchema>;
 
+export interface IInstallTailwin{
+  bonita_config: TBonitaConfigSchema;
+  options?: TAddOptions
+}
 
-export async function installTailwind(bonita_config: TBonitaConfigSchema) {
+export async function installTailwind({bonita_config,options}:IInstallTailwin) {
 try {
-    const config = await promptForTWConfig(bonita_config);
+    const config = await promptForTWConfig(bonita_config,options);
     const root_styles = validateRelativePath(config.root_styles);
     await addBaseTWcss(root_styles)
     await addTailwindPostcssConfig();
