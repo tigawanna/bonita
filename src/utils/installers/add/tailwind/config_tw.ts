@@ -6,12 +6,10 @@ import { IPackageJson } from "@/utils/helpers/pkg-manager/types";
 import { getPkgJson } from "@/utils/helpers/pkg-json";
 import { merge } from "remeda";
 import { validateRelativePath } from "@/utils/helpers/strings/general";
-import { checkFramework } from "@/utils/helpers/framework/whatFramework";
 import depsjson from "#/deps.json";
 import { loadingSpinner } from "@/utils/helpers/clack/spinner";
-
 import { filterObjectWithArray } from "#/src/utils/helpers/objects/filter";
-import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
+import { TBonitaConfigSchema, TBonitaOptions } from "#/src/utils/config/bonita";
 import { promptForTWConfig } from "#/src/utils/config/prompts/tailwind";
 
 
@@ -72,13 +70,15 @@ export async function addTailwindDeps(config: TBonitaConfigSchema) {
   }
 }
 
-export async function addTailwindConfig(bonita_config: TBonitaConfigSchema) {
+export async function addTailwindConfig(bonita_config: TBonitaConfigSchema,options:TBonitaOptions) {
   const spinner = loadingSpinner();
 
   try {
-    const config = await promptForTWConfig(bonita_config);
-    const tw_config_path = validateRelativePath(config.tailwind?.tw_config);
+    const config = await promptForTWConfig(bonita_config,options);
+
+    const tw_config_path = validateRelativePath(config.tailwind?.tw_config??"tailwind.config.js");
     const tw_plugins = config.tailwind?.tw_plugins;
+
     spinner.add("tw_config", { text: "adding tailwind config..." });
     if (tw_plugins && tw_plugins?.length > 0) {
       const tw_config_with_plugins = updateTwPlugins(tw_plugins);
@@ -98,8 +98,7 @@ export async function addTailwindPostcssConfig() {
   const tailwind_config_spinners = loadingSpinner();
   tailwind_config_spinners.add("postcss_config", { text: "adding postcss config" });
   try {
-    const post_css_path =
-      (await checkFramework()) === "RedWood" ? "postcss.config.mjs" : "postcss.config.js";
+    const post_css_path = "postcss.config.cjs";
     await writeFile(post_css_path, postcss_templlate);
     tailwind_config_spinners.succeed("postcss_config", { text: "added postcss config" });
   } catch (error: any) {

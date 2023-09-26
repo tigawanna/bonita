@@ -6,14 +6,14 @@ import { printHelpers } from "@/utils/helpers/print-tools";
 import { TBonitaOptions } from "#/src/utils/config/bonita";
 
 
-export async function installTanstack(config: TBonitaConfigSchema,options?:TBonitaOptions) {
+export async function installTanstack(bonita_config: TBonitaConfigSchema,bonita_options:TBonitaOptions) {
   try {
     const framework = await checkFramework();
     if (framework === "React+Vite") {
-      addTanstackToVite(config,options);
+      addTanstackToVite(bonita_config,bonita_options);
     }
     if (framework === "Nextjs") {
-      addNextjsTanstack(config,options);
+      addNextjsTanstack(bonita_config,bonita_options);
     }
   } catch (error: any) {
     // process.exit(1);

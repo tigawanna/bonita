@@ -18,9 +18,9 @@ export const nextjsReactSchema = z.object({
 
 export type TNextjsReactConfigSchema = z.infer<typeof nextjsReactSchema>;
 
-export async function addNextjsTanstack(bonita_config: TBonitaConfigSchema,options?:TBonitaOptions) {
+export async function addNextjsTanstack(bonita_config: TBonitaConfigSchema,bonita_options:TBonitaOptions) {
   try {
-    if(!options?.yes){
+    if(!bonita_options?.yes){
     const consent = await confirmPrompt({
       message:
         "This will overwrite sapp/page.tsx and app/layout.tsx. Do you want to continue?",
@@ -33,7 +33,7 @@ export async function addNextjsTanstack(bonita_config: TBonitaConfigSchema,optio
     }
   }
     const templates = await fetchNextjsTanstackTemplates();
-    await updateNextJsfilesWithTemplates(templates, bonita_config);
+    await updateNextJsfilesWithTemplates(templates, bonita_config,bonita_options);
     await addtanstackNextDeps();
 
   } catch (error: any) {

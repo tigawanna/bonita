@@ -1,11 +1,6 @@
 import depsjson from "#/deps.json"
-import { writeFile } from "fs/promises";
-import { merge } from "remeda";
 import { loadingSpinner } from "../clack/spinner";
-import { getPkgJson } from "../pkg-json";
-import { multiselectPrompt } from "../clack/prompts";
 import { printHelpers } from "../print-tools";
-import { getBonitaConfig } from "../../config/config";
 import { filterObjectWithArray } from "../objects/filter";
 
 

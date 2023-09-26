@@ -14,6 +14,34 @@ yarn add -D bonita
 pnpm i -D bonita
 ```
 
+
+## options:
+All the commands have the following options ,which can be passed in to avoid the prompts
+
+```ts
+    .option("-rd, --root-dir <root_dir>", "Root directory")
+    .option("-rf, --root-file <root_file>", "Root file",)
+    .option("-rs, --root-styles <root_styles>", "Root styles file")
+  
+    .option("-af, --app-file <app_file>", "App file")
+    .option("-routes, --routes-dir <routes_dir>", "Routes dir")
+  
+    .option("-cd, --components <components>", "Compnents dir")
+    .option("-sd, --state <state>", "State dir")
+  
+    .option("-tw, --tw-config <tw_config>", "tailwind config path",)
+    .option("-panda, --panda-config <panda_config>", "panda config path",)
+    .option("-p, --plugins <plugins...>", "Plugins")
+  
+    .option('-y, --yes', 'Accept all defaults', false)
+```
+ex:
+```sh
+npx bonita add tailwind -y --root-dir ./src --root-file ./src/main.tsx --root-styles ./src/index.css  --plugins daisyui --tw-config tailwind.config.js
+```
+
+passing in all the options a command requires will bypass the prompts , if a required option is missing it will propmpt for it
+
 ## commands 
 
 ### bonita add
@@ -25,10 +53,46 @@ yarn bonita add tailwind
 pnpm dlx bonita add tailwind
 ```
 
+
+
 This command currently works for 
 - tailwind
 - pandacss
 - tanstack
+
+
+Options
+- tailwind
+  
+```ts
+    .option("-rd, --root-dir <root_dir>", "Root directory")
+    .option("-rf, --root-file <root_file>", "Root file",)
+    .option("-rs, --root-styles <root_styles>", "Root styles file")
+    .option("-tw, --tw-config <tw_config>", "tailwind config path",)
+    .option("-p, --plugins <plugins...>", "Plugins")
+
+```
+- pandacss
+
+```ts
+    .option("-rd, --root-dir <root_dir>", "Root directory")
+    .option("-rf, --root-file <root_file>", "Root file",)
+    .option("-rs, --root-styles <root_styles>", "Root styles file")
+    .option("-panda, --panda-config <panda_config>", "panda config path",)
+```
+- tanstack
+  
+```ts
+    .option("-rd, --root-dir <root_dir>", "Root directory")
+    .option("-rf, --root-file <root_file>", "Root file",)
+    .option("-rs, --root-styles <root_styles>", "Root styles file")
+  
+    .option("-af, --app-file <app_file>", "App file")
+    .option("-routes, --routes-dir <routes_dir>", "Routes dir")
+  
+    .option("-cd, --components <components>", "Compnents dir")
+    .option("-sd, --state <state>", "State dir")
+  ```
 
 Currently supported frameworks:
 ### React
@@ -36,6 +100,11 @@ Currently supported frameworks:
     - Next.js
     - Redwood
     - Rakkasjs
+
+
+
+
+
 
 running 
 ```sh

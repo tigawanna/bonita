@@ -40,7 +40,7 @@ export const addCommand = bonitaRootCommand({
   });
 
 
-  export async function listAddablePackages(config: TBonitaConfigSchema,add_options?:TBonitaOptions) {
+  export async function listAddablePackages(config: TBonitaConfigSchema,add_options:TBonitaOptions) {
   const result = await multiselectPrompt<TAddArgs[number]>({
     /* REQUIRED OPTIONS */
     message: "Which packages would you like to add?", // The message that the user will read

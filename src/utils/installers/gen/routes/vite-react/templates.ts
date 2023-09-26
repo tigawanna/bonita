@@ -1,7 +1,7 @@
 import { writeFile } from "fs/promises";
 import { pascal } from "radash";
 import fs from "fs";
-import { TBonitaConfigSchema } from "@/utils/config/config";
+import { TBonitaConfigSchema } from "@/utils/config/bonita";
 import { promptForTanstackConfig } from "@/utils/config/prompts/vite-tanstack";
 import { loadingSpinner } from "@/utils/helpers/clack/spinner";
 

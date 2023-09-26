@@ -1,7 +1,7 @@
 import fs from "fs";
 import kleur from "kleur";
 import { printHelpers } from "@/utils/helpers/print-tools";
-import { TBonitaConfigSchema } from "@/utils/config/config";
+import { TBonitaConfigSchema } from "@/utils/config/bonita";
 import { promptForTanstackConfig } from "@/utils/config/prompts/vite-tanstack";
 import { removeDirectory } from "@/utils/helpers/fs/directories";
 import {

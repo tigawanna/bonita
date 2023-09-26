@@ -3,20 +3,20 @@ import { z } from "zod";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { addBasePandacss, addPandaDeps, pandaInit } from "./config_panda";
 import { promptForPandaConfig } from "#/src/utils/config/prompts/panda";
-import { TBonitaConfigSchema } from "#/src/utils/config/bonita";
-import { TBonitaOptions } from "../../../../commands/add/add-commnad-args";
+import { TBonitaConfigSchema, TBonitaOptions } from "#/src/utils/config/bonita";
+
 
 
 // Define the tailwind schema
 export const pandaSchema = z.object({
-  panda_config_path: z.string().default("panda.config.ts"),
+  panda_config_path: z.string().default("panda.config.ts").optional(),
 });
 
 export type TPandaConfigSchema = z.infer<typeof pandaSchema>;
 
 export interface IInstallPanda {
   bonita_config: TBonitaConfigSchema;
-  options?: TBonitaOptions
+  options:TBonitaOptions
 }
 
 export async function installPanda({bonita_config,options}:IInstallPanda) {

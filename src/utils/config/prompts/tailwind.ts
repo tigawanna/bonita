@@ -4,48 +4,51 @@ import { z } from "zod";
 import { TBonitaOptions } from "@/utils/config/bonita";
 import { TBonitaConfigSchema } from "@/utils/config/bonita";
 import { saveConfig } from "@/utils/config/helpers";
+import { printHelpers } from "../../helpers/print-tools";
 
 
 
 // Define the tailwind schema
 export const tailwindSchema = z.object({
-  tw_config: z.string().default("tailwind.config.js"),
-  tw_plugins: z.array(z.string()).default([]),
+  tw_config: z.string().default("tailwind.config.js").optional(),
+  tw_plugins: z.array(z.string()).default([]).optional(),
 });
 
 export type TTailwindConfigSchema = z.infer<typeof tailwindSchema>;
 
-export async function promptForTWConfig(config: TBonitaConfigSchema,options?:TBonitaOptions) {
-  try {
-    if (config && config.tailwind && "tw_config" in config.tailwind) {
-      return {
-        ...config,
-        tailwind: {
-          tw_config: config.tailwind.tw_config ?? "tailwind.config.js",
-          tw_plugins: config.tailwind.tw_plugins ?? [],
-        },
-      };
-    }
+export async function promptForTWConfig(config:TBonitaConfigSchema,options:TBonitaOptions) {
+try {
+    // if (config && config.tailwind && "tw_config" in config.tailwind) {
+    //   return {
+    //     ...config,
+    //     tailwind: {
+    //       tw_config: config.tailwind.tw_config ?? "tailwind.config.js",
+    //       tw_plugins: config.tailwind.tw_plugins ?? [],
+    //     },
+    //   };
+    // }
+
     const answers: TTailwindConfigSchema = {
-      tw_config:options?.twConfig??await textPrompt({
+      tw_config:options?.twConfig??config?.tailwind?.tw_config??await textPrompt({
           message: "Where do you want to add your tailwind config file",
           initialValue: existsSync("tailwind.config.ts")?"tailwind.config.ts":"tailwind.config.js",
         }),
-      tw_plugins:options?.plugins??await  textPrompt({
+      tw_plugins:options?.plugins??config?.tailwind?.tw_plugins??await  textPrompt({
         message: "Want some plugins?",
         initialValue: "daisyui,tailwindcss-animate",
-      }).then((value) => value.split(","))
+      }).then((value) => value?.split(","))
 
     };
 
- 
+   
     
     const new_config = {
       ...config,
       tailwind: answers,
     };
-
-    await saveConfig(new_config);
+    if(new_config){
+      await saveConfig(new_config);
+    }
     // printHelpers.debug("new_config saved", new_config);
     return new_config;
   } catch (error: any) {

@@ -1,4 +1,4 @@
-import { TBonitaConfigSchema } from "@/utils/config/bonita"
+import { TBonitaConfigSchema, TBonitaOptions } from "@/utils/config/bonita"
 import { saveConfig } from "@/utils/config/helpers"
 import { confirmPrompt } from "@/utils/helpers/clack/prompts";
 import { z } from "zod";
@@ -9,16 +9,16 @@ export const nextjsReactSchema = z.object({
 
 export type TNextjsReactConfigSchema = z.infer<typeof nextjsReactSchema>;
 
-export async function promptForNextjsConfig(config: TBonitaConfigSchema) {
+export async function promptForNextjsConfig(config: TBonitaConfigSchema,options:TBonitaOptions) {
   try {
-    if (config && config.next_config) {
-      return {
-        ...config,
-        next_config: config.next_config,
-      };
-    }
+    // if (config && config.next_config) {
+    //   return {
+    //     ...config,
+    //     next_config: config.next_config,
+    //   };
+    // }
     const answers: TNextjsReactConfigSchema = {
-      src_dir: await confirmPrompt({
+      src_dir: config.next_config?.src_dir??await confirmPrompt({
           message: "Use src directory?",
           initialValue: true,
         }),

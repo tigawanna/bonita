@@ -102,132 +102,40 @@ export async function add_command_options(options: any) {
   }
 }
 
+
+
 /**
- * Retrieves the bonitaConfig object asynchronously.
- * This will either take the command options and if not present 
- * get the saved config or prompt a new config
- * it will also prompt for ant missing fields from the config
+ * Retrieves the Bonita config with optional saved config and options.
+ * cli options will be given a higher priority than saved config
  *
- * @param {TBonitaOptions} config_options - Optional configuration options
- * @return {Promise<bonitaConfig>} The retrieved bonitaConfig object
+ * @param {TBonitaOptions} [options] - The options to customize the config.
+  * @return {Promise<TBonitaConfigSchema>} The retrieved Bonita config.
  */
-export async function getBonitaConfig(config_options?: TBonitaOptions) {
+export async function getBonitaConfig(options?:TBonitaOptions) {
   try {
-    const framework_type = await checkFramework();
-    const fw_defaults = frameworkDefaults(framework_type);
-    const a_config = config_options ? config_options : await getSavedbonitaConfig();
-    const config = await getbonitaConfigOrPrompt({
-      config_input: a_config,
-      framework_type,
-      fw_defaults,
-    });
-    if (config) {
-      saveConfig(config);
-    }
-    return config;
-  } catch (error: any) {
-    throw new Error("error prompting for config" + error.message);
-  }
-}
-
-
-
-export interface IGetBonitaConfigOrPromptprops {
-  config_input: TBonitaOptions | TBonitaConfigSchema;
-  framework_type?: TFrameworkType;
-  fw_defaults?: TFrameWorkDefaults;
-}
-
-/**
- * Retrieves the OK CLI configuration object or 
- * prompts the user  if fields are missing.
- *
- * @param {IGetBonitaConfigOrPromptprops} {
- *   config_input,
- *   framework_type,
- *   fw_defaults,
- * } - The input parameters for the function:
- * - config_input: The input configuration object that may contain the OK CLI configuration details.
- * - framework_type: The type of framework.
- * - fw_defaults: The default framework details.
- *
- * @return {Promise<TBonitaConfigSchema>} The OK CLI configuration object.
- */
-export async function getbonitaConfigOrPrompt({
-  config_input,
-  framework_type,
-  fw_defaults,
-}: IGetBonitaConfigOrPromptprops): Promise<TBonitaConfigSchema> {
-  const { root_dir, root_file, root_styles } = fw_defaults || {};
-
-  const config_partial =
-    config_input && "root_dir" in config_input
-      ? config_input
-      : {
-          root_dir: config_input?.rootDir,
-          root_file: config_input?.rootFile,
-          root_styles: config_input?.rootStyles,
-          framework: framework_type,
-        };
-  return {
-    root_dir: config_partial?.root_dir ?? await textPrompt({
-      message: "root directory ?",
-      // defaultValue: root_dir,
-      initialValue: root_dir,
-    }),
-    root_file: config_partial?.root_file ?? await textPrompt({
-      message: "root/entry file ?",
-      // defaultValue: root_file,
-      initialValue: root_file,
-    }),
-    root_styles: config_partial?.root_styles?? await textPrompt({
-      message: "Main css file ?",
-      // defaultValue: root_styles,
-      initialValue: root_styles,
-    }),
-    framework: config_partial.framework ?? (await selectPrompt({
-      message: "Framework ?",
-      options: [
-        { value: "React+Vite", label: "React+Vite" },
-        { value: "Nextjs", label: "Nextjs" },
-        { value: "RedWood", label: "RedWood" },
-        { value: "Rakkasjs", label: "Rakkasjs" },
-      ],
-    })) as TFrameworkType
-  };
-
-  // return await getSavedbonitaConfig(config_partial);
-}
-
-/**
- * Generates prompts the user for  bonita config 
- * this is the root config where all the other configs will e nested.
- *
- * @return {Promise<TBonitaConfigSchema>} The user's configuration answers.
- * @throws {Error} If there is an error prompting for the configuration.
- */
-export async function promptForbonitaConfig() {
-  try {
+    const saved_config = await getSavedbonitaConfig();
     const framework_type = await checkFramework();
     const { root_dir, root_styles, root_file } = frameworkDefaults(framework_type);
     const answers: TBonitaConfigSchema = {
-      root_dir: await textPrompt({
+      ...saved_config,
+      root_dir:options?.rootDir??saved_config?.root_dir?? await textPrompt({
         message: "root directory ?",
         defaultValue: root_dir,
         initialValue: root_dir,
       }),
-      root_file: await textPrompt({
+      root_file:options?.rootFile??saved_config?.root_file?? await textPrompt({
         message: "root/entry file ?",
         defaultValue: root_file,
         initialValue: root_file,
       }),
 
-      root_styles: await textPrompt({
+      root_styles:options?.rootStyles??saved_config?.root_styles?? await textPrompt({
         message: "Main css file ?",
         defaultValue: root_styles,
         initialValue: root_styles,
       }),
       framework:
+      saved_config?.framework??
         framework_type ??
         (await selectPrompt({
           message: "Framework ?",
@@ -236,6 +144,7 @@ export async function promptForbonitaConfig() {
             { value: "Nextjs", label: "Nextjs" },
           ],
         })),
+
     };
 
     saveConfig(answers);
@@ -246,26 +155,21 @@ export async function promptForbonitaConfig() {
 }
 
 
+
 /**
  * Retrieves the saved bonita configuration or prompts fro a new one if missing
  *
  * @return {Promise<TBonitaConfigSchema>} The saved bonita configuration.
  */
 export async function getSavedbonitaConfig() {
-  try {
+try {
     if (existsSync("./bonita.config.json")) {
       const bonita_config_file = await safeJSONParse<TBonitaConfigSchema>(
         readFileSync("./bonita.config.json").toString()
       );
       const bonita_config = bonitaConfigSchema.parse(bonita_config_file);
-      if (bonita_config) {
-        return bonita_config;
-      } else {
-        return await promptForbonitaConfig();
+      return bonita_config;
       }
-    } else {
-      return await promptForbonitaConfig();
-    }
   } catch (error) {
     printHelpers.warning("corrupt bonita config attempting to reset");
     await removeDirectory("./bonita.config.json");
@@ -273,3 +177,8 @@ export async function getSavedbonitaConfig() {
     process.exit(1);
   }
 }
+
+
+
+
+
