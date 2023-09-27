@@ -4,8 +4,8 @@ import { IPackageJson } from "@/utils/helpers/pkg-manager/types";
 import { readFile, writeFile } from "fs/promises";
 import { merge } from "remeda";
 
-import { promptForNextjsConfig } from "../../../config/prompts/nextjs";
-import { TBonitaConfigSchema } from "@/utils/config/config";
+import { promptForNextjsConfig } from "@/utils/config/prompts/nextjs";
+import { TBonitaConfigSchema, TBonitaOptions } from "@/utils/config/bonita";
 import { printHelpers } from "@/utils/helpers/print-tools";
 import { loadingSpinner } from "#/src/utils/helpers/clack/spinner";
 
@@ -87,9 +87,10 @@ export type UpdateNextTemplates = Awaited<
 export async function updateNextJsfilesWithTemplates(
   template: UpdateNextTemplates,
   bonita_config: TBonitaConfigSchema,
+  bonita_options:TBonitaOptions,
 ) {
   const spinnies = loadingSpinner();
-  const config = await promptForNextjsConfig(bonita_config);
+  const config = await promptForNextjsConfig(bonita_config, bonita_options);
   const next_config = config.next_config;
   try {
     for await (const key of Object.keys(template)) {

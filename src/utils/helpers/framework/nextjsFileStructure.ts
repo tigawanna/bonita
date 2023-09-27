@@ -1,7 +1,8 @@
 import { existsSync } from "fs";
-import { FrameWorkDefaults } from "./framework";
+import { TFrameWorkDefaults } from "./framework";
 
-export function nextJSFileStructure(): FrameWorkDefaults {
+
+export function nextJSFileStructure(): TFrameWorkDefaults {
 // case app dir with src
     if (existsSync("./src/app")) {
         return {
