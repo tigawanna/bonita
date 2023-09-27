@@ -1,6 +1,6 @@
 {
   "name": "bonita",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "description": "Ultimate cli tool for frontend projects",
   "author": {
